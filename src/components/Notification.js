@@ -18,7 +18,7 @@ const Notification = () => {
   }
   if (notification) {
     setTimeout(() => {
-      dispatch(clear())
+      dispatch(clear(notification))
     }, 5000)
     return (
       <div style={style}>
