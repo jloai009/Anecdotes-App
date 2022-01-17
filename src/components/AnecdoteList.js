@@ -1,8 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { voteFor } from '../reducers/anecdoteReducer'
-import { createNotification } from '../reducers/notificationReducer'
-import anecdoteServices from '../services/anecdotes'
+import { setNotification } from '../reducers/notificationReducer'
 
 const AnecdoteList = (props) => {
   const dispatch = useDispatch()
@@ -15,7 +14,7 @@ const AnecdoteList = (props) => {
   const vote = async (id) => {
     const anecdote = anecdotes.find(a => a.id === id)
     dispatch(voteFor(anecdote))
-    dispatch(createNotification('You voted for \'' + anecdote.content +'\''))
+    dispatch(setNotification('You voted for \'' + anecdote.content +'\'', 5))
   }
 
   return (
