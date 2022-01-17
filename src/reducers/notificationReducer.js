@@ -1,9 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const notificationReducer = (state = '', action) => {
   switch (action.type) {
     case 'CLEAR':
-      return ''
+      if (action.content === state) {
+        return ''
+      } else {
+        return state
+      }
     case 'CREATE_NOTIFICATION':
       return action.data
     default:
@@ -18,10 +23,10 @@ export const createNotification = (content) => {
   }
 }
 
-export const clear = () => {
+export const clear = (notification) => {
   return {
     type: 'CLEAR',
-    content: ''
+    content: notification
   }
 }
 
