@@ -5,10 +5,13 @@ import { createNotification } from '../reducers/notificationReducer'
 
 const AnecdoteList = (props) => {
   const dispatch = useDispatch()
-  const anecdotes = useSelector(state => state.anecdotes)
 
+  let anecdotes = useSelector(state => state.anecdotes)
+  const filterValue = useSelector(state => state.filter)
+  if (filterValue) {
+    anecdotes = anecdotes.filter(a => a.content.includes(filterValue))
+  }
   const vote = (id) => {
-    console.log('vote', id)
     dispatch(voteFor(id))
     dispatch(createNotification('You voted for \'' + anecdotes.find(a => a.id === id).content +'\''))
   }
