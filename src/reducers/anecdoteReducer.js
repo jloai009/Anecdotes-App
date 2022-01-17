@@ -3,7 +3,9 @@ const reducer = (state = [], action) => {
     case 'NEW_ANECDOTE':
       return [...state, action.data]
     case 'INIT_ANECDOTES':
-      return action.data
+      const anecdotes = action.data
+      anecdotes.sort((a, b) => (b.votes - a.votes))
+      return anecdotes
     case 'VOTE':
       const id = action.data.id
       let newState = state.map(anecdote =>
