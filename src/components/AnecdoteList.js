@@ -14,11 +14,7 @@ const AnecdoteList = (props) => {
   }
   const vote = async (id) => {
     const anecdote = anecdotes.find(a => a.id === id)
-    const response = await anecdoteServices.vote(anecdote)
-    if (response.status !== 200) {
-      return 
-    }
-    dispatch(voteFor(response.data))
+    dispatch(voteFor(anecdote))
     dispatch(createNotification('You voted for \'' + anecdote.content +'\''))
   }
 

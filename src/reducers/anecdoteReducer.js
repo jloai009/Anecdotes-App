@@ -21,9 +21,16 @@ const reducer = (state = [], action) => {
 }
 
 export const voteFor = (anecdote) => {
-  return {
-    type: 'VOTE',
-    data: anecdote
+  return async dispatch => {
+    const response = await anecdoteService.vote(anecdote)
+    if (response.status !== 200) {
+      return
+    }
+    const newAnecdote = response.data
+    dispatch({
+      type: 'VOTE',
+      data: newAnecdote
+    })
   }
 }
 
