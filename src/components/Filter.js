@@ -12,11 +12,13 @@ const Filter = (props) => {
     dispatch(filter(event.target.value))
   }
 
+  const style = {
+    marginBottom: 10
+  }
+
   return (
-    <div>
+    <div style={style}>
       Filter: <input type="text" value={filterValue} onChange={handleFilter}/>
-      <br />
-      <br />
     </div>
   )
 }
