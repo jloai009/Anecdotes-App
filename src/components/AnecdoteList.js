@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { voteFor } from '../reducers/anecdoteReducer'
 import { createNotification } from '../reducers/notificationReducer'
+import anecdoteServices from '../services/anecdotes'
 
 const AnecdoteList = (props) => {
   const dispatch = useDispatch()
@@ -11,11 +12,16 @@ const AnecdoteList = (props) => {
   if (filterValue) {
     anecdotes = anecdotes.filter(a => a.content.includes(filterValue))
   }
-  const vote = (id) => {
-    dispatch(voteFor(id))
-    dispatch(createNotification('You voted for \'' + anecdotes.find(a => a.id === id).content +'\''))
+  const vote = async (id) => {
+    const anecdote = anecdotes.find(a => a.id === id)
+    const response = await anecdoteServices.vote(anecdote)
+    if (response.status !== 200) {
+      return 
+    }
+    dispatch(voteFor(response.data))
+    dispatch(createNotification('You voted for \'' + anecdote.content +'\''))
   }
-  
+
   return (
     <div>
     {anecdotes.map(anecdote =>
