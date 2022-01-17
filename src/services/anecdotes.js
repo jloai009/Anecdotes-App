@@ -7,4 +7,20 @@ const getAll = async () => {
   return response.data
 }
 
-export default { getAll }
+const createNew = async (content) => {
+  const object = { content, votes: 0 }
+  const response = await axios.post(baseUrl, object)
+  return response.data
+}
+
+const vote = async (content) => {
+  const object = { ...content, votes: content.votes + 1 }
+  const response = await axios.put(baseUrl + '/' + content.id, object)
+  return response
+}
+
+export default {
+  getAll,
+  createNew,
+  vote
+}
