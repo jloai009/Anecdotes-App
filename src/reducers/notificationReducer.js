@@ -47,7 +47,7 @@ export const setNotification = (content, duration) => {
         timeout:
           setTimeout(() => {
             dispatch(clear())
-          }, 3000)
+          }, duration * 1000)
       }
     })
   }
