@@ -1,16 +1,23 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-const notificationReducer = (state = '', action) => {
+const initialState = {
+  notification: '',
+  timeout: null
+}
+
+const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CLEAR':
-      if (action.content === state) {
-        return ''
-      } else {
-        return state
-      }
+      return initialState
     case 'CREATE_NOTIFICATION':
-      return action.data
+      if (state.timeout) {
+        clearTimeout(state.timeout)
+      }
+      return {
+        notification: action.data.content,
+        timeout: action.data.timeout
+      }
     default:
       return state
   }
@@ -23,10 +30,11 @@ export const createNotification = (content) => {
   }
 }
 
-export const clear = (notification) => {
-  return {
-    type: 'CLEAR',
-    content: notification
+export const clear = () => {
+  return async dispatch => {
+    dispatch({
+      type: 'CLEAR'
+    })
   }
 }
 
@@ -34,12 +42,14 @@ export const setNotification = (content, duration) => {
   return async dispatch => {
     dispatch({
       type: 'CREATE_NOTIFICATION',
-      data: content
+      data: {
+        content,
+        timeout:
+          setTimeout(() => {
+            dispatch(clear())
+          }, 3000)
+      }
     })
-    setTimeout(() => {
-      dispatch(clear(content))
-    }
-    , duration * 1000)
   }
 }
 
