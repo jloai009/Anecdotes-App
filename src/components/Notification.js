@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-import { clear } from '../reducers/notificationReducer'
+import { connect } from 'react-redux'
 
 const Notification = () => {
 
@@ -26,4 +25,8 @@ const Notification = () => {
   }
 }
 
-export default Notification
+const ConnectedNotification = connect(
+
+)(Notification)
+
+export default ConnectedNotification
