@@ -1,1 +1,1 @@
-# Redux Anecdotes App
+# Anecdotes App
